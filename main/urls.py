@@ -1,8 +1,7 @@
-
 from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),  # altere 'sua_app' para o nome da sua app
+    path('api/', include('api.urls')),  # inclui todas as rotas do app api aqui
 ]
