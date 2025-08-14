@@ -13,7 +13,11 @@ SECRET_KEY = 'django-insecure-mhb@zjtc)#$f^=n-sg@0l^!htp2gws*$4)p!z@(ubqcp_m#k3u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'apipeladeiros.onrender.com',
+]
 
 
 # Application definition
@@ -64,15 +68,15 @@ WSGI_APPLICATION = 'main.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
- 'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'railway',
-    'USER': 'root',
-    'PASSWORD': 'HfkSdEAnrZqwPsXouXciDodBhXiMjBkS',
-    'HOST': 'shuttle.proxy.rlwy.net',
-    'PORT': '54410',
- }
+DATABASES =  {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'railway',
+        'USER': 'root',
+        'PASSWORD': 'HfkSdEAnrZqwPsXouXciDodBhXiMjBkS',
+        'HOST': 'shuttle.proxy.rlwy.net',
+        'PORT': '54410',
+    }
 }
 
 # Password validation
@@ -115,17 +119,29 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'api.CustomUser'
+AUTH_USER_MODEL = 'api.Usuario'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
 # CORS
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://apipeladeiros.onrender.com",
+    # adicione outras origens se precisar
+]
 
 # Arquivos estáticos (para produção)
 import os
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MERCADO_PAGO_ACCESS_TOKEN = 'SEU_TOKEN_AQUI'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}

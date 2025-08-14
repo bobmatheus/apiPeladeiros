@@ -1,31 +1,47 @@
 from rest_framework import serializers
-from .models import CustomUser, Espaco, Reserva, ItemCarrinho
-from django.contrib.auth.password_validation import validate_password
+from .models import (
+    MensagemContato, Espaco, RegraPreco, Periodo, PrecoPeriodo,
+    Feriado, Bloqueio, BloqueioRecorrente, Reserva, Usuario
+)
 
-class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    password2 = serializers.CharField(write_only=True, required=True)  # confirmação da senha
-
+class MensagemContatoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
-        fields = ['id', 'username', 'email', 'password', 'password2']
-
-    def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "As senhas não conferem."})
-        return attrs
-
-    def create(self, validated_data):
-        user = CustomUser.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password'],
-        )
-        return user
+        model = MensagemContato
+        fields = '__all__'
 
 class EspacoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Espaco
+        fields = '__all__'
+
+class RegraPrecoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RegraPreco
+        fields = '__all__'
+
+class PeriodoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Periodo
+        fields = '__all__'
+
+class PrecoPeriodoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PrecoPeriodo
+        fields = '__all__'
+
+class FeriadoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feriado
+        fields = '__all__'
+
+class BloqueioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bloqueio
+        fields = '__all__'
+
+class BloqueioRecorrenteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BloqueioRecorrente
         fields = '__all__'
 
 class ReservaSerializer(serializers.ModelSerializer):
@@ -33,12 +49,7 @@ class ReservaSerializer(serializers.ModelSerializer):
         model = Reserva
         fields = '__all__'
 
-    def validate(self, data):
-        if Reserva.objects.filter(espaco=data['espaco'], data=data['data']).exists():
-            raise serializers.ValidationError("Espaço já reservado para esta data.")
-        return data
-
-class ItemCarrinhoSerializer(serializers.ModelSerializer):
+class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ItemCarrinho
+        model = Usuario
         fields = '__all__'

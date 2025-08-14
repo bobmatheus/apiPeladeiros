@@ -1,13 +1,24 @@
-from django.urls import path
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .views import RegisterView, EspacoListView, ReservaListCreateView, ItemCarrinhoListCreateView
+from django.urls import path, include
+from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.routers import DefaultRouter
+from .views import (
+    MensagemContatoViewSet, EspacoViewSet, RegraPrecoViewSet, PeriodoViewSet,
+    PrecoPeriodoViewSet, FeriadoViewSet, BloqueioViewSet, BloqueioRecorrenteViewSet,
+    ReservaViewSet
+)
+
+router = DefaultRouter()
+router.register(r'mensagens', MensagemContatoViewSet)
+router.register(r'espacos', EspacoViewSet)
+router.register(r'regras-preco', RegraPrecoViewSet)
+router.register(r'periodos', PeriodoViewSet)
+router.register(r'precos-periodo', PrecoPeriodoViewSet)
+router.register(r'feriados', FeriadoViewSet)
+router.register(r'bloqueios', BloqueioViewSet)
+router.register(r'bloqueios-recorrentes', BloqueioRecorrenteViewSet)
+router.register(r'reservas', ReservaViewSet)
 
 urlpatterns = [
-    path('accounts/register/', RegisterView.as_view(), name='register'),
-    path('accounts/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('accounts/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-
-    path('espacos/', EspacoListView.as_view(), name='espaco-list'),
-    path('reservas/', ReservaListCreateView.as_view(), name='reserva-list'),
-    path('carrinho/', ItemCarrinhoListCreateView.as_view(), name='carrinho-list'),
+    path('auth/token/', obtain_auth_token),  # ⬅ endpoint de login com username/senha
+    path('', include(router.urls)),
 ]
