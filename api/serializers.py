@@ -53,3 +53,23 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = '__all__'
+
+# ---- Novo Serializer para Cadastro ----
+class UsuarioRegistroSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = Usuario
+        fields = [
+            'id', 'username', 'email', 'password', 'first_name', 'last_name',
+            'cpf', 'data_nascimento', 'telefone', 'sexo',
+            'cep', 'logradouro', 'numero', 'complemento',
+            'bairro', 'cidade', 'estado'
+        ]
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        usuario = Usuario(**validated_data)
+        usuario.set_password(password)  # senha criptografada
+        usuario.save()
+        return usuario

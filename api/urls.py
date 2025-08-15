@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     MensagemContatoViewSet, EspacoViewSet, RegraPrecoViewSet, PeriodoViewSet,
     PrecoPeriodoViewSet, FeriadoViewSet, BloqueioViewSet, BloqueioRecorrenteViewSet,
-    ReservaViewSet
+    ReservaViewSet, UsuarioRegistroView
 )
 
 router = DefaultRouter()
@@ -19,6 +19,7 @@ router.register(r'bloqueios-recorrentes', BloqueioRecorrenteViewSet)
 router.register(r'reservas', ReservaViewSet)
 
 urlpatterns = [
-    path('auth/token/', obtain_auth_token),  # ⬅ endpoint de login com username/senha
+    path('auth/token/', obtain_auth_token),   # Login com username/senha
+    path('register/', UsuarioRegistroView.as_view(), name='usuario-register'),  # Cadastro de usuário
     path('', include(router.urls)),
 ]
