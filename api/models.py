@@ -116,11 +116,10 @@ class Reserva(models.Model):
 from django.contrib.auth.models import AbstractUser
 
 class Usuario(AbstractUser):
-    cpf = models.CharField(max_length=14, unique=True)
+    cpf = models.CharField(max_length=14, unique=False, null=True, blank=True)
     data_nascimento = models.DateField(null=True, blank=True)
     telefone = models.CharField(max_length=15, null=True, blank=True)
-    SEXO_CHOICES = (('M', 'Masculino'), ('F', 'Feminino'))
-    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, null=True, blank=True)
+    sexo = models.CharField(max_length=1, choices=(('M', 'Masculino'), ('F', 'Feminino')), null=True, blank=True)
     cep = models.CharField(max_length=9, null=True, blank=True)
     logradouro = models.CharField(max_length=255, null=True, blank=True)
     numero = models.CharField(max_length=20, null=True, blank=True)
