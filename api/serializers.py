@@ -61,10 +61,7 @@ class UsuarioRegistroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = [
-            'id', 'username', 'email', 'password', 'first_name', 'last_name',
-            'cpf', 'data_nascimento', 'telefone', 'sexo',
-            'cep', 'logradouro', 'numero', 'complemento',
-            'bairro', 'cidade', 'estado'
+            'id', 'username', 'email', 'password', 
         ]
 
     def create(self, validated_data):
