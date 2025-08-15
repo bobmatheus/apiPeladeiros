@@ -127,10 +127,9 @@ REST_FRAMEWORK = {
 }
 # CORS
 CORS_ALLOWED_ORIGINS = [
-    "https://apipeladeiros.onrender.com",
-    # adicione outras origens se precisar
+    "https://apipeladeiros.onrender.com",  # API hospedada
+    "http://127.0.0.1:8000",               # frontend local servido pelo Django
 ]
-
 # Arquivos estáticos (para produção)
 import os
 STATIC_URL = '/static/'
