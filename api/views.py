@@ -1,14 +1,14 @@
-# contato/api/views.py
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.permissions import AllowAny
 from .models import (
     MensagemContato, Espaco, RegraPreco, Periodo,
-    PrecoPeriodo, Feriado, Bloqueio, BloqueioRecorrente, Reserva
+    PrecoPeriodo, Feriado, Bloqueio, BloqueioRecorrente, Reserva, Usuario
 )
 from .serializers import (
     MensagemContatoSerializer, EspacoSerializer, RegraPrecoSerializer,
     PeriodoSerializer, PrecoPeriodoSerializer, FeriadoSerializer,
-    BloqueioSerializer, BloqueioRecorrenteSerializer, ReservaSerializer
+    BloqueioSerializer, BloqueioRecorrenteSerializer, ReservaSerializer,
+    UsuarioRegistroSerializer
 )
 
 class MensagemContatoViewSet(viewsets.ModelViewSet):
@@ -54,4 +54,10 @@ class BloqueioRecorrenteViewSet(viewsets.ModelViewSet):
 class ReservaViewSet(viewsets.ModelViewSet):
     queryset = Reserva.objects.all()
     serializer_class = ReservaSerializer
+    permission_classes = [AllowAny]
+
+# ---- Nova View para Cadastro ----
+class UsuarioRegistroView(generics.CreateAPIView):
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioRegistroSerializer
     permission_classes = [AllowAny]
